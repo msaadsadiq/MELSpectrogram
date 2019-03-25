@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Nov 10 08:28:19 2018
-
-@author: goldw
+  Code to generate MEL spectrogram.
+	
+	Author: Saad Sadiq, Michael Castellanos, University of Miami April 4th 2018
 """
 
 import numpy as np
@@ -12,6 +12,7 @@ import tensorflow.contrib.eager as tfe
 #tfe.enable_eager_execution()
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
+import argparse
 
 def hz_to_mel(freq):
   return 1127. * tf.log(1.0 + (freq / 700.))
@@ -95,5 +96,17 @@ def plot_several_logmelspec(paths):
     plt.colorbar(format='%+02.0f dB')
 
   plt.tight_layout()
+  plt.savefig('output_mel', format='png', dpi=150, bbox_inches='tight')
+
+# ============================================================================================
+# main script
+# ============================================================================================
+if __name__ == "__main__":
+  parser = argparse.ArgumentParser()
+  parser.add_argument("fileName")
+  args = parser.parse_args()
   
-plot_several_logmelspec(["ADOS_audio - Part_1.wav"])
+  file = args.fileName
+  plot_several_logmelspec([file])
+
+#eof
